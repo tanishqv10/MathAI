@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: MathAI – Serverless Math Tool with SymPy and LangChain
+
+Parameters:
+  OpenAIKey:
+    Type: String
+    Description: "Your OpenAI Key"
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: python3.11
+    MemorySize: 256
+
+Resources:
+  MathAIAPI:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: MathAI/
+      Handler: app.lambda_handler
+      Runtime: python3.11
+      Timeout: 15
+      MemorySize: 512
+      Environment:
+        Variables:
+          OPENAI_API_KEY:
+            Ref: OpenAIKey
+      Events:
+        Solve:
+          Type: HttpApi
+          Properties:
+            Path: /solve
+            Method: POST
+            ApiId:
+              Ref: MathAIHttpApi
+
+  MathAIHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowMethods:
+          - GET
+          - POST
+          - OPTIONS
+        AllowHeaders:
+          - Content-Type
+          - X-Amz-Date
+          - Authorization
+          - X-Api-Key
+          - X-Amz-Security-Token
+        AllowOrigins:
+          - http://localhost:3000
+
+Outputs:
+  MathAPIEndpoint:
+    Description: "MathAI API endpoint"
+    Value:
+      Fn::Sub: "https://${MathAIHttpApi}.execute-api.${AWS::Region}.amazonaws.com/solve"
+
