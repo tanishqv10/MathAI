@@ -25,14 +25,15 @@ All computations include step-by-step outputs.
 
 ```bash
 . ├── app.py # AWS Lambda handler 
-  | ├── mathAgent.py # LangChain agent & tool setup 
-  │ ├── tools/ 
-  │ │ ├── derivative.py 
-  │ │ ├── integral.py 
-  │ │ ├── simplify.py 
-  │ │ ├── solve.py 
-  │ ├── utils/ 
-  │ │ └── preprocess.py # Core symbolic preprocessing logic
+  ├── tools/ 
+  │ ├── derivative.py 
+  │ ├── integral.py 
+  │ ├── simplify.py 
+  │ ├── solve.py
+  ├── chains/ 
+  │ ├── mathAgent.py  #LangChain agent
+  ├── utils/ 
+  │ └── preprocess.py # Core symbolic preprocessing logic using Sympy
 ```
   
 ---
