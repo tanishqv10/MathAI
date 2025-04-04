@@ -23,6 +23,7 @@ All computations include step-by-step outputs.
 
 ## Folder Structure
 
+```bash
 . ├── app.py # AWS Lambda handler 
   | ├── mathAgent.py # LangChain agent & tool setup 
   │ ├── tools/ 
@@ -32,7 +33,7 @@ All computations include step-by-step outputs.
   │ │ ├── solve.py 
   │ ├── utils/ 
   │ │ └── preprocess.py # Core symbolic preprocessing logic
-
+```
   
 ---
 
