@@ -59,6 +59,14 @@ sam build & sam deploy --guided
 ```
 Enter your OpenAI key when prompted to enter
 
+## Frontend
+
+Create a .env.local file and store NEXT_PUBLIC_API_URL here.
+
+```bash
+cd mathai-frontend
+npm run dev
+
 # Acknowledgements
 
 SymPy
