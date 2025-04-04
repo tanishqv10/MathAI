@@ -1,22 +1,70 @@
-# MathAI 🧠
+# MathAI - Symbolic Math Solver using SymPy & LangChain
 
-MathAI is a full-stack math tutor powered by GPT-4 and SymPy. 
-It supports natural language queries like "Differentiate 3x^2 + 5x" and gives step-by-step explanations.
+MathAI is a lightweight symbolic math engine built using Python, SymPy, and LangChain. It supports natural-language and LaTeX-style inputs to perform:
 
-## Structure
+- Derivatives
+- Integrals
+- Simplification
+- Equation Solving
 
-- `MathAI/` - Python backend deployed to AWS Lambda via SAM
-- `mathai-frontend/` - React-based frontend styled like ChatGPT
+All computations include step-by-step outputs.
 
-## Tech Stack
+---
 
-- 🧠 LangChain + OpenAI (GPT-4)
-- ➗ SymPy for symbolic math
-- ☁️ AWS Lambda + API Gateway
-- 💻 React frontend
+## Features
 
-## Usage
+- Implicit multiplication parsing (e.g., `2x`, `sin x y`)
+- Smart handling of powers like `sin^2 x` or `cos^3(x)`
+- LangChain Agent powered by OpenAI for tool routing
+- AWS Lambda-ready backend
+- Preprocessing powered by SymPy's `parse_expr`
+
+---
+
+## Folder Structure
+
+. ├── app.py # AWS Lambda handler 
+  | ├── mathAgent.py # LangChain agent & tool setup 
+  │ ├── tools/ 
+  │ │ ├── derivative.py 
+  │ │ ├── integral.py 
+  │ │ ├── simplify.py 
+  │ │ ├── solve.py 
+  │ ├── utils/ 
+  │ │ └── preprocess.py # Core symbolic preprocessing logic
+
+  
+---
+
+## Setup
+
+### 1. Clone the repo
 
 ```bash
-cd MathAI/
-sam build && sam deploy
+git clone https://github.com/tanishqv10/MathAI.git
+cd MathAI
+
+```
+
+### 2. Install requirements
+pip install -r requirements.txt
+
+---
+
+## Deployment
+You can deploy the backend as an AWS Lambda using app.py and connect it to a React frontend or LangChain chatbot.
+
+```bash
+sam build & sam deploy --guided
+```
+Enter your OpenAI key when prompted to enter
+
+# Acknowledgements
+
+SymPy
+
+LangChain
+
+AWS SAM
+
+OpenAI

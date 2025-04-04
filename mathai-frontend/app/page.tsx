@@ -4,6 +4,9 @@ import { useState } from "react";
 import { BlockMath } from "react-katex";
 import "katex/dist/katex.min.css";
 
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
+
+
 export default function Home() {
   const [query, setQuery] = useState("");
   const [result, setResult] = useState<any>(null);
@@ -14,7 +17,7 @@ export default function Home() {
     setResult(null);
 
     try {
-      const res = await fetch("https://uiobb5kz8i.execute-api.us-west-2.amazonaws.com/solve", {
+      const res = await fetch(`${apiBaseUrl}/solve`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),

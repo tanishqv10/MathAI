@@ -4,7 +4,7 @@ from utils.preprocess import preprocess_expression
 
 def solve_equation(equation: str) -> dict:
     try:
-        expr = preprocess_expression(expr)
+        equation = preprocess_expression(equation)
         x = symbols("x")
         parsed = sympify(equation)
         solutions = solve(parsed, x)
