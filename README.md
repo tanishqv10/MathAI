@@ -49,17 +49,22 @@ cd MathAI
 ```
 
 ### 2. Install requirements
-pip install -r requirements.txt
 
+```bash
+pip install -r requirements.txt
+```
 ---
 
 ## Deployment
 You can deploy the backend as an AWS Lambda using app.py and connect it to a React frontend or LangChain chatbot.
 
 ```bash
-sam build & sam deploy --guided
+sam build
+sam deploy --guided
 ```
 Enter your OpenAI key when prompted to enter
+
+---
 
 ## Frontend
 
@@ -68,8 +73,9 @@ Create a .env.local file and store NEXT_PUBLIC_API_URL here.
 ```bash
 cd mathai-frontend
 npm run dev
+```
 
-# Acknowledgements
+## Acknowledgements
 
 SymPy
 
