@@ -24,16 +24,14 @@ All computations include step-by-step outputs.
 ## Folder Structure
 
 ```bash
-. ├── app.py # AWS Lambda handler 
-  ├── tools/ 
-  │ ├── derivative.py 
-  │ ├── integral.py 
-  │ ├── simplify.py 
-  │ ├── solve.py
-  ├── chains/ 
-  │ ├── mathAgent.py  #LangChain agent
-  ├── utils/ 
-  │ └── preprocess.py # Core symbolic preprocessing logic using Sympy
+.
+├── app.py                     # AWS Lambda handler and API entrypoint
+├── chains/
+│   └── mathAgent.py          # LangChain agent with OpenAI-powered tools
+├── tools/
+│   └── llmTools.py           # Utility to create LangChain tools using LLM
+├── utils/
+│   └── preprocess.py         # SymPy-powered preprocessing for parsing math input
 ```
   
 ---
@@ -75,9 +73,26 @@ cd mathai-frontend
 npm run dev
 ```
 
-## Acknowledgements
+## Agent Workflow (LangChain)
 
-SymPy
+### 1. Query sent to LangChain agent (mathAgent.py)
+
+### 2. Agent routes to appropriate LLM tool (e.g., Derivative, Integral)
+
+### 3. Tool invokes OpenAI with a structured math tutoring prompt
+
+### 4. Response is formatted with:
+
+```bash
+
+Result: <Final Answer>
+
+Explanation:
+1. Step one...
+2. Step two...
+```
+
+## Acknowledgements
 
 LangChain
 

@@ -28,19 +28,14 @@ def lambda_handler(event, context):
         sys_stdout = sys.stdout
         sys.stdout = buffer
         
-        result = agent.run(query)
-
-        sys.stdout = sys_stdout
-        chain_of_thought = strip_ansi(buffer.getvalue())
-        buffer.close()
+        result = agent.invoke(query)
 
         return {
             "statusCode": 200,
             "body": json.dumps({
                 "success": 1,
                 "query": query,
-                "result": result,
-                "chain_of_thought": chain_of_thought
+                "result": result
             })
         }
 
