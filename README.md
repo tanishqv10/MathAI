@@ -13,11 +13,9 @@ All computations include step-by-step outputs.
 
 ## Features
 
-- Implicit multiplication parsing (e.g., `2x`, `sin x y`)
-- Smart handling of powers like `sin^2 x` or `cos^3(x)`
 - LangChain Agent powered by OpenAI for tool routing
 - AWS Lambda-ready backend
-- Preprocessing powered by SymPy's `parse_expr`
+- Frontend with Next.js
 
 ---
 
