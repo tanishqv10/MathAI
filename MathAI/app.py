@@ -13,7 +13,7 @@ app = FastAPI()
 # CORS for frontend (Vercel)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # You can restrict to your Vercel domain later
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -24,36 +24,35 @@ def strip_ansi(text):
     ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
     return ansi_escape.sub('', text)
 
-def lambda_handler(event, context):
+@app.post("/query")
+async def handle_query(request: Request):
     try:
-        body = json.loads(event["body"])
+        body = await request.json()
         query = body.get("query", "").strip()
+        print(f"Received query: {query}")
 
         if not query:
-            return {
-                "statusCode": 400,
-                "body": json.dumps({"success": 0, "error": "Missing 'query' in request."})
-            }
-        
+            return {"success": 0, "error": "Missing 'query' in request."}
+
         buffer = io.StringIO()
         sys_stdout = sys.stdout
         sys.stdout = buffer
-        
+
         result = agent.invoke(query)
 
+        sys.stdout = sys_stdout
+        print(f"Agent result: {result}")
+
         return {
-            "statusCode": 200,
-            "body": json.dumps({
-                "success": 1,
-                "query": query,
-                "result": result
-            })
+            "success": 1,
+            "query": query,
+            "result": result
         }
 
     except Exception as e:
-        sys.stdout = sys.__stdout__  # Ensure stdout is restored on error
+        sys.stdout = sys.__stdout__
+        print(f"Exception: {str(e)}")
         return {
-            "statusCode": 500,
-            "body": json.dumps({"success": 0, "error": str(e)})
+            "success": 0,
+            "error": str(e)
         }
-
