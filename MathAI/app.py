@@ -24,7 +24,7 @@ def strip_ansi(text):
     ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
     return ansi_escape.sub('', text)
 
-@app.post("/query")
+@app.post("/solve")
 async def handle_query(request: Request):
     try:
         body = await request.json()
