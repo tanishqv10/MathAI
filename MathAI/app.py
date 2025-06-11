@@ -5,7 +5,18 @@ import sys
 import json
 from openai import OpenAI
 from chains.mathAgent import agent
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 
+app = FastAPI()
+
+# CORS for frontend (Vercel)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # You can restrict to your Vercel domain later
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
