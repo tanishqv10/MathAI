@@ -1,47 +1,28 @@
 """
 Integration tests for the full MathAI v2 pipeline.
 """
+import os
 import pytest
 from unittest.mock import Mock, patch
 from core.pipeline import MathPipeline
 from core.models import RoutingDecision, ComputeResult
 
 
+# Skip integration tests if no API key is set
+requires_api_key = pytest.mark.skipif(
+    not os.environ.get("OPENAI_API_KEY"),
+    reason="OPENAI_API_KEY not set - skipping integration tests"
+)
+
+
 class TestPipelineIntegration:
     """Integration tests requiring API keys."""
     
-    @pytest.fixture
-    def mock_pipeline(self):
-        """Create a pipeline with mocked LLM calls."""
-        with patch('core.router.OpenAI') as mock_openai:
-            with patch('core.explainer.OpenAI') as mock_explainer_openai:
-                # Mock router response
-                mock_response = Mock()
-                mock_response.choices = [Mock()]
-                mock_response.choices[0].message.content = '''
-                {
-                    "operation": "differentiate",
-                    "expression": "x^2",
-                    "variable": "x",
-                    "solve_for": null,
-                    "assumptions": [],
-                    "confidence": 1.0
-                }
-                '''
-                mock_openai.return_value.chat.completions.create.return_value = mock_response
-                
-                # Mock explainer response
-                mock_explain = Mock()
-                mock_explain.choices = [Mock()]
-                mock_explain.choices[0].message.content = "Step 1: Apply power rule..."
-                mock_explainer_openai.return_value.chat.completions.create.return_value = mock_explain
-                
-                pipeline = MathPipeline(langfuse_enabled=False)
-                yield pipeline
-    
-    def test_differentiation_flow(self, mock_pipeline):
-        """Test complete differentiation flow."""
-        result = mock_pipeline.process("differentiate x^2")
+    @requires_api_key
+    def test_differentiation_flow(self):
+        """Test complete differentiation flow with real API."""
+        pipeline = MathPipeline(langfuse_enabled=False)
+        result = pipeline.process("differentiate x^2")
         
         assert result.success
         assert result.operation == "differentiate"
