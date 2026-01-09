@@ -251,3 +251,6 @@ build/
 .vite/
 
 samconfig.toml
+
+# Legacy v1 code
+MathAI_v1/

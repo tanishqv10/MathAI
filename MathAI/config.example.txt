@@ -1,0 +1,20 @@
+# MathAI v2 Environment Configuration
+# Copy this to .env and fill in your values
+
+# OpenAI API Key (required)
+OPENAI_API_KEY=sk-your-api-key-here
+
+# Model Configuration (optional - these are defaults)
+ROUTER_MODEL=gpt-4o-mini
+EXPLAINER_MODEL=gpt-4o
+
+# LangFuse Configuration (optional - for observability)
+LANGFUSE_ENABLED=true
+LANGFUSE_PUBLIC_KEY=pk-lf-xxxxx
+LANGFUSE_SECRET_KEY=sk-lf-xxxxx
+LANGFUSE_HOST=https://cloud.langfuse.com
+
+# Application Settings
+MATHAI_ENV=development  # development or production
+PORT=8000
+
